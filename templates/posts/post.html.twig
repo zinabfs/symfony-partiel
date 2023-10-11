@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %} {% block title %}Poste n°{{ post.id }}{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_home') }}">Retour</a>
+    <img class="card-img-top" src='/uploads/{{ post.image }}' alt="Card image cap">
+
+    <p>
+    {{ post.content | raw }}
+    </p>
+    <hr class="hr" />
+    <div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+
+            {{ post.likes | length }} likes
+            <a href="{{ path('post_like', {'id': post.id}) }}">
+                <button type="button" class="btn btn-primary">Like</button>
+            </a>
+            <a href="{{ path('post_dislike', {'id': post.id}) }}">
+                <button type="button" class="btn btn-danger">Dislike</button>
+            </a>
+            {{ post.dislikes | length }} dislikes
+
+        </div>
+    </div>
+    <hr class="hr" />
+    {% if app.user is defined and app.user is not null %}
+        {{ form_start(form) }}
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Ajouter un commentaire</button>
+        </div>
+        {{ form_end(form) }}
+    {% else %}
+        <a href="{{ path('app_login') }}" class="alert alert-info" role="alert">
+            Vous devez être connecté pour ajouter un commentaire
+        </a>
+    {% endif %}
+    <hr class="hr" />
+    <h2>Commentaires</h2>
+    {% for comment in comments %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">De : {{ comment.author }}</h5>
+                <p class="card-text">{{ comment.content }}</p>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

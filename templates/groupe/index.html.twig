@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fil d'actualité{% endblock %}
+
+{% block body %}
+
+    <style>
+        .posts {
+            width: 1024px;
+            margin: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+    </style>
+    <a href="{{ path('app_home') }}">Retour</a>
+
+    <h1>Groupes</h1>
+
+    <h2>Ajouter un groupe</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {{ form_start(form) }}
+        <button type="submit" class="btn btn-primary">Ajouter un Groupe</button>
+        {{ form_end(form) }}
+    </form>
+
+    <hr class="hr"/>
+    <h2>Groupes</h2>
+    {% for groupe in groupes %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"> {{ groupe.name }}</h5>
+                <p class="card-text">{{ groupe.description }}</p>
+                <p class="card-title">Owner : {{ groupe.owner }}</p>
+
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

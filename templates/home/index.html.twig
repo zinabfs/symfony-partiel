@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fil d'actualité{% endblock %}
+
+{% block body %}
+
+    <style>
+        .posts {
+            width: 1024px;
+            margin: 30px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+    </style>
+
+    <a href="{{ path('groupe') }}">Vers les groupes</a>
+    <hr class="hr"/>
+
+    <h1>Fil d'actualité</h1>
+    <hr class="hr"/>
+
+    <h2>Ajouter un poste</h2>
+    <hr class="hr"/>
+
+    <form method="post" enctype="multipart/form-data">
+        {{ form_start(form) }}
+        <button type="submit" class="btn btn-primary">Ajouter un Poste</button>
+        {{ form_end(form) }}
+    </form>
+    <hr class="hr"/>
+
+    <div class="posts">
+        {% for post in posts %}
+            <a href="{{ path('post', {'id': post.id}) }}">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <img class="card-img-top" src='uploads/{{ post.image }}' alt="Card image cap">
+
+                        <p class="card-text">
+                            {{ post.content | raw }}
+                        </p>
+                        <p>
+                            Par : {{ post.author }}
+                        </p>
+
+                        <p>
+                            Écrit le : {{ post.createdAt | date('d/m/Y') }}
+                        </p>
+                    </div>
+                </div>
+            </a>
+
+        {% else %}
+            <h3>
+                <td colspan="4">Aucun poste trouvé.</td>
+            </h3>
+        {% endfor %}
+    </div>
+{% endblock %}
